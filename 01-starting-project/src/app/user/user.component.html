@@ -1,0 +1,7 @@
+<div>
+    <button (click)="onSelectUser()">
+        <!-- Need location + [] around property name and assign the value; only use string interpolation for attributes -->
+        <img [src]="imagePath" [alt]="selectedUser().name" /> 
+        <span>{{ selectedUser().name }}</span> <!-- String interpolation {{}} to put the value of the expression into the template -->
+    </button> <!-- Call signal value as a function using () -->
+</div>
