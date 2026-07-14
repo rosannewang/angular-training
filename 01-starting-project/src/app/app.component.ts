@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { UserComponent } from './user/user.component';
 import { DUMMY_USERS } from './dummy-users';
+import { TasksComponent } from "./tasks/tasks.component";
 
 const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 
@@ -10,10 +11,21 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [HeaderComponent, UserComponent],
+  imports: [HeaderComponent, UserComponent, TasksComponent],
 })
 
 export class AppComponent {
   // selectedUser = DUMMY_USERS[randomIndex]; // new property for 
   users = DUMMY_USERS;
+  selectedUserId = 'u1';
+
+  onSelectUser(id: string) {
+    // console.log('Selected user with id ' + id);
+    this.selectedUserId = id;
+  }
+  
+  get selectedUser() {
+    return this.users.find(user => user.id === this.selectedUserId);
+  }
+
 }
