@@ -1,0 +1,10 @@
+@if (on()) {
+  <button (click)="onPowerOff()">turn off</button>
+  <input type="checkbox" (change)="onToggleChange($event)">
+  <app-controller></app-controller>
+  
+  <p>Count: {{ count() }}</p>
+  <button (click)="increment()">+</button>
+} @else {
+  <button (click)="onPowerOn()">turn on</button>
+}

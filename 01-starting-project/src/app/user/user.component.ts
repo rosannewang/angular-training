@@ -1,4 +1,4 @@
-import { Component, computed, Input, input } from '@angular/core';
+import { Component, computed, Input, Output, EventEmitter} from '@angular/core';
 // import { DUMMY_USERS } from '../dummy-users';
 
 // const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
@@ -11,23 +11,23 @@ import { Component, computed, Input, input } from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
+  @Input ({required: true}) id!: string;
+  @Input({required: true}) avatar!: string; // needs to have a defined type & add ! to tell TypeScript that this property will be initialized later (for our case, in html)
+  @Input({required: true}) name!: string; // add {required: true} so that it pings you if you forget to pass the property
+  @Output() select = new EventEmitter<string>();
 
-  // @Input({required: true}) avatar!: string; // needs to have a defined type & add ! to tell TypeScript that this property will be initialized later (for our case, in html)
-  // @Input({required: true}) name!: string; // add {required: true} so that it pings you if you forget to pass the property
-  
-  // these input.required ... act as data containers:
-  avatar = input.required<string>(); // tells Angular that this is an input property in html (generic type is string from TS)
-  name = input.required<string>(); // alternative to using the decorators (@'s) commented out above
+  // imagePath = computed(() => {
+  //   return './assets/users/' + this.avatar;
+  // });
 
+  // select = output<string>(); // output function
 
-  // get imagePath(){
-  //   return './assets/users/' + this.avatar();
-  // }
+  get imagePath(){
+    return './assets/users/' + this.avatar;
+  }
 
-  imagePath = computed(() => {
-    return './assets/users/' + this.avatar();
-  });
-
-  onSelectUser(){}
+  onSelectUser(){
+    this.select.emit(this.id); // emit an event to parent component
+  }
 
 }
