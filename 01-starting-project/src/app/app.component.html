@@ -8,21 +8,10 @@
             </li>
         }
     </ul>
-    @if (selectedUser) { <!-- Selected user must be defined to run the if-statement, so no need for ? or ! -->
-          <app-tasks [name]="selectedUser.name" />
-    } @else {
-        <p id = "fallback"> Select a user to view their tasks </p>
-    }
     
-    <!-- Legacy for/if/else code for reference (need to import NgFor in the HTML template)-->
-    <!--
-        <li *ngFor = "let user of users">
-            <app-user [user]="user" (select)="onSelectUser($event)"></app-user>
-        </li>
-
-        <app-tasks *ngIf="selectedUser" [name]="selectedUser.name"></app-tasks>
-        <ng-template #fallback>
-            <p id="fallback"> Select a user to view their tasks </p>
-        </ng-template>
-    -->
+    @if (selectedUser) {
+        <app-tasks [userId]="selectedUser.id" [name]="selectedUser.name" />
+    } @else {
+        <p id="fallback">Select a user to view their tasks</p>
+    }
 </main>
