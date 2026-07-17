@@ -1,7 +1,16 @@
 import { Component, computed, Input, Output, EventEmitter} from '@angular/core';
-// import { DUMMY_USERS } from '../dummy-users';
 
-// const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
+// type User = {
+//   id: string;
+//   avatar: string;
+//   name: string;
+// } // type alias (TS feature) to outsource type
+
+interface User { // most of the time it doesn't matter to use type/interface
+  id: string;
+  avatar: string;
+  name: string;
+} 
 
 @Component({
   selector: 'app-user',
@@ -11,11 +20,8 @@ import { Component, computed, Input, Output, EventEmitter} from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input({required: true}) user!: {
-    id: string;
-    avatar: string;
-    name: string;
-  }
+  @Input({required: true}) user!: User;
+
   @Output() select = new EventEmitter();
 
   get imagePath(){
