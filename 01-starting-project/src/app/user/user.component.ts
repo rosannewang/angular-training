@@ -11,23 +11,19 @@ import { Component, computed, Input, Output, EventEmitter} from '@angular/core';
   styleUrl: './user.component.css'
 })
 export class UserComponent {
-  @Input ({required: true}) id!: string;
-  @Input({required: true}) avatar!: string; // needs to have a defined type & add ! to tell TypeScript that this property will be initialized later (for our case, in html)
-  @Input({required: true}) name!: string; // add {required: true} so that it pings you if you forget to pass the property
-  @Output() select = new EventEmitter<string>();
-
-  // imagePath = computed(() => {
-  //   return './assets/users/' + this.avatar;
-  // });
-
-  // select = output<string>(); // output function
+  @Input({required: true}) user!: {
+    id: string;
+    avatar: string;
+    name: string;
+  }
+  @Output() select = new EventEmitter();
 
   get imagePath(){
-    return './assets/users/' + this.avatar;
+    return './assets/users/' + this.user.avatar;
   }
 
   onSelectUser(){
-    this.select.emit(this.id); // emit an event to parent component
+    this.select.emit(this.user.id); // emit an event to parent component
   }
 
 }
