@@ -1,5 +1,5 @@
 <div>
-    <button (click)="onSelectUser()">
+    <button [class.active] = "selected" (click)="onSelectUser()">
         <img [src]="imagePath" [alt]="user.name" /> <!-- Click listener -->
         <span>{{ user.name }}</span> <!-- String interpolation {{}} to put the value of the expression into the template -->
     </button> <!-- Call signal value as a function using () -->

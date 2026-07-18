@@ -15,7 +15,6 @@ const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length);
 })
 
 export class AppComponent {
-  // selectedUser = DUMMY_USERS[randomIndex]; // new property for 
   users = DUMMY_USERS;
   selectedUserId?: string;
 
