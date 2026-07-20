@@ -1,5 +1,6 @@
 import { Component, Output, EventEmitter, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { type NewTaskData } from '../task/task.model';
 
 export interface newTask {
   title: string;
@@ -16,7 +17,8 @@ export interface newTask {
 })
 export class NewTaskComponent {
 
-  @Output() cancel = new EventEmitter<void>(); // add void to indicate no data is being emitted
+  @Output() cancel = new EventEmitter<void>();
+  @Output() add = new EventEmitter<NewTaskData>(); // add newTask as the type of data being emitted
   enteredTitle = '';
   enteredSummary = '';
   enteredDate = '';
@@ -25,4 +27,11 @@ export class NewTaskComponent {
     this.cancel.emit();
   }
   
+  onSubmit() {
+    this.add.emit({
+      title: this.enteredTitle,
+      summary: this.enteredSummary,
+      date: this.enteredDate
+    });
+  }
 }
