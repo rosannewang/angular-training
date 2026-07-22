@@ -1,1 +1,28 @@
-<p>investment-results works!</p>
+@if(!results){ 
+    <p class="center">Please input your investment details</p>
+} @else { 
+    <table>
+        <thead>
+            <tr> <!--show col headrs -->
+                <th>Year</th>
+                <th>Investment Value</th>
+                <th>Yearly Interest</th>
+                <th>Total Interest</th>
+                <th>Invested Capital</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (result of results; track $index) {
+                <tr>
+                    <td>{{ result.year }}</td>
+                    <td>{{ result.valueEndOfYear | currency }}</td>
+                    <td>{{ result.interest | currency }}</td>
+                    <td>{{ result.totalInterest | currency }}</td>
+                    <td>{{ result.totalAmountInvested | currency }}</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
