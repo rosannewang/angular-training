@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { HeaderComponent } from "./header/header.component";
 import { UserInputComponent } from "./user-input/user-input.component";
@@ -12,15 +12,15 @@ import { InvestmentInput } from './investment-input.model';
   imports: [HeaderComponent, UserInputComponent, InvestmentResultsComponent],
 })
 export class AppComponent {
-
-    resultsData?: { // may be UD or have data
+    // stateful data - something that will change will have an impact on the UI
+    resultsData = signal<{ // may be UD or have data
       year: number,
       interest: number,
       valueEndOfYear: number,
       annualInvestment: number,
       totalInterest: number,
       totalAmountInvested: number,
-    }[];
+    }[] | undefined>(undefined); // this is a signal that can hold either an array of investment results or undefined
 
     onCalculateInvestmentResults(data: InvestmentInput) {
     const { initialInvestment, duration, expectedReturn, annualInvestment } = data;
@@ -43,7 +43,7 @@ export class AppComponent {
         totalAmountInvested: initialInvestment + annualInvestment * year,
       });
     }
-    this.resultsData = annualData;
+    this.resultsData.set(annualData);
   }
 
 }
