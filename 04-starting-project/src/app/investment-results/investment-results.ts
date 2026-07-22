@@ -22,5 +22,6 @@ function calculateInvestmentResults() {
     });
   }
 
+  console.log(annualData);
   return annualData;
 }
