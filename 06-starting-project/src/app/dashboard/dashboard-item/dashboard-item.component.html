@@ -1,0 +1,7 @@
+<div class="dashboard-item"> <!-- Goal: make this a reusable component -->
+    <header>
+        <img [src]="image().src" [alt]="image().alt" />
+        <h2>{{ title() }}</h2>
+    </header>
+    <ng-content />  <!-- This is where the content from the parent, wrapped content will be inserted -->
+</div>
