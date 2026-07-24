@@ -1,12 +1,10 @@
-<form>
-  <p>
-    <label>Title</label>
+<form> <!--We don't want tp remove the form element because it's semantically significant (ex. forms, buttons, sections)-->
+  <app-control class="control" label="Title">
     <input name="title" id="title" />
-  </p>
-  <p>
-    <label>Request</label>
+  </app-control>
+  <app-control class="control" label="Request">
     <textarea name="request" id="request" rows="3"></textarea>
-  </p>
+  </app-control>
   <p>
     <button appButton>
       Submit

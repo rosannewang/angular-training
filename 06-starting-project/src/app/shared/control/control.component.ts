@@ -8,7 +8,7 @@ import { Component, input, ViewEncapsulation } from '@angular/core';
   styleUrl: './control.component.css',
   encapsulation: ViewEncapsulation.None, // This is to allow the styles to be applied to the component
   host: {
-    class: 'control'
+    class: 'control' // add if you have certain properties added to the host element
   }
 })
 export class ControlComponent {
