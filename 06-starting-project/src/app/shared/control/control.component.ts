@@ -1,4 +1,4 @@
-import { Component, input, ViewEncapsulation } from '@angular/core';
+import { Component, input, ViewEncapsulation, HostBinding, HostListener, inject, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-control',
@@ -8,9 +8,21 @@ import { Component, input, ViewEncapsulation } from '@angular/core';
   styleUrl: './control.component.css',
   encapsulation: ViewEncapsulation.None, // This is to allow the styles to be applied to the component
   host: {
-    class: 'control' // add if you have certain properties added to the host element
+    class: 'control', // add if you have certain properties added to the host element
+    
   }
+  // '(click)': 'onClick()' // put in host{}
 })
 export class ControlComponent {
+  // @HostBinding('class') className = 'control'; // alterative to host{} above; usually discouraged
+  // @HostListener('click') onClick() {
+  //   console.log('Clicked!');
+  // }
+  
   label = input.required<string>();
+  private el = inject(ElementRef); // inject the ElementRef to get access to the host element
+  onClick() {
+    console.log('Clicked!');
+    console.log(this.el);
+  }
 }
