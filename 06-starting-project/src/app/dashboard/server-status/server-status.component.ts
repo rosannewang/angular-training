@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { DestroyRef } from '@angular/core';
 
 @Component({
   selector: 'app-server-status',
@@ -7,17 +8,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   templateUrl: './server-status.component.html',
   styleUrl: './server-status.component.css'
 })
-export class ServerStatusComponent implements OnInit, OnDestroy {
+export class ServerStatusComponent implements OnInit{
   currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
-  // private interval?: NodeJS.Timeout
-  private interval?: ReturnType<typeof setInterval> // removes Cannot find name 'NodeJS' Error
+  private destroyRef = inject(DestroyRef); // set up as a property, then set up a listener for that property
 
   constructor() {}
 
   // Trying to randomly change the status
   ngOnInit(){
     console.log('ON INIT')
-    this.interval = setInterval(() => {
+    const interval = setInterval(() => {
     const rnd = Math.random();
     if (rnd < 0.5) {
       this.currentStatus = 'offline';
@@ -27,13 +27,17 @@ export class ServerStatusComponent implements OnInit, OnDestroy {
       this.currentStatus = 'unknown';
     }
     }, 5000);
+
+    this.destroyRef.onDestroy(() => {
+      clearInterval(interval);
+    });
   } // note: this method won't trigger errors, so it's recommended to add 'implements OnInit' in the class
   
   ngAfterViewInit() {
     console.log('AFTER VIEW INIT')
   }
 
-  ngOnDestroy() {
-    clearTimeout(this.interval);
-  }
+  // ngOnDestroy() {
+  //   clearTimeout(this.interval);
+  // }
 }
