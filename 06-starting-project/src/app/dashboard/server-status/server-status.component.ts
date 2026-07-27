@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { DestroyRef } from '@angular/core';
 
 @Component({
@@ -9,10 +9,14 @@ import { DestroyRef } from '@angular/core';
   styleUrl: './server-status.component.css'
 })
 export class ServerStatusComponent implements OnInit{
-  currentStatus: 'online' | 'offline' | 'unknown' = 'offline';
+  currentStatus = signal<'online' | 'offline' | 'unknown'>('offline');
   private destroyRef = inject(DestroyRef); // set up as a property, then set up a listener for that property
 
-  constructor() {}
+  constructor() {
+    effect(() => { // manually set up a subscription to the signal
+      console.log(this.currentStatus());
+    });
+  }
 
   // Trying to randomly change the status
   ngOnInit(){
@@ -20,11 +24,11 @@ export class ServerStatusComponent implements OnInit{
     const interval = setInterval(() => {
     const rnd = Math.random();
     if (rnd < 0.5) {
-      this.currentStatus = 'offline';
+      this.currentStatus.set('offline');
     } else if (rnd < 0.9) {
-      this.currentStatus = 'online';
+      this.currentStatus.set('online');
     } else {
-      this.currentStatus = 'unknown';
+      this.currentStatus.set('unknown');
     }
     }, 5000);
 
