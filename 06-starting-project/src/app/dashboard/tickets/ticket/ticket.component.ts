@@ -10,6 +10,13 @@ import { Ticket } from '../ticket.model';
 })
 export class TicketComponent {
   data = input.required<Ticket>();
+
+  // Alternative way to define input with default value
+  // Avoid using an alias
+  // data = input<Ticket>(null, {}); // optional input with default valu
+  // data = inupt<Ticket>({transform: (value) => value || null})
+  // @Input({}) ...
+  // @Output({}) ... , where {} is where the alias is placed
   close = output(); 
   detailsVisible = signal(false);
 

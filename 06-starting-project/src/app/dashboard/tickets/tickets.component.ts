@@ -26,7 +26,7 @@ export class TicketsComponent {
   }
 
   onCloseTicket(id: string){
-    this.tickets = this.tickets.map(ticket => { // mapping every ticket to a new value
+    this.tickets = this.tickets.map(ticket => { // mapping every ticket to a new value 
       if (ticket.id === id) {
         return {...ticket, status: 'closed'};
       }
