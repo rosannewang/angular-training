@@ -30,6 +30,7 @@ export class NewTicketComponent implements AfterViewInit {
 
   onSubmit(title: string, ticketText: string) {
     console.log({title, text: ticketText});
+    this.add.emit({title, text: ticketText});
     this.form?.nativeElement.reset();
   }
 }
