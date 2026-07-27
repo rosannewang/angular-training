@@ -16,12 +16,22 @@ export class TicketsComponent {
   onAdd(ticketData: {title: string, text: string}) {
     const ticket: Ticket = {
       title: ticketData.title,
-      text: ticketData.text,
+      request: ticketData.text,
       id: Math.random().toString(),
       status: 'open',
-      request: ticketData.text
+      
     };
     
     this.tickets.push(ticket);
   }
+
+  onCloseTicket(id: string){
+    this.tickets = this.tickets.map(ticket => { // mapping every ticket to a new value
+      if (ticket.id === id) {
+        return {...ticket, status: 'closed'};
+      }
+      return ticket;
+    });
+  }
+
 }

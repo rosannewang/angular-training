@@ -1,14 +1,24 @@
-import { Component, input } from '@angular/core';
-import { ControlComponent } from "../../../shared/control/control.component";
+import { Component, input, signal, output } from '@angular/core';
 import { Ticket } from '../ticket.model';
 
 @Component({
   selector: 'app-ticket',
   standalone: true,
-  imports: [ControlComponent],
+  imports: [],
   templateUrl: './ticket.component.html',
   styleUrl: './ticket.component.css'
 })
 export class TicketComponent {
   data = input.required<Ticket>();
+  close = output(); 
+  detailsVisible = signal(false);
+
+  onToggleDetails() {
+    // this.detailsVisible.set(!this.detailsVisible());
+    this.detailsVisible.update(value => !value);
+  }
+  
+  onMarkAsCompleted() {
+    this.close.emit();
+  }
 }
