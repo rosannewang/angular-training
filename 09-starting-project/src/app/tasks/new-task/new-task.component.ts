@@ -1,7 +1,8 @@
 import { Component, ElementRef, Inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+
 import { TasksService } from '../tasks.service';
-import { TaskServiceToken } from '../../../main';
+import { TasksServiceToken } from '../../../main';
 
 @Component({
   selector: 'app-new-task',
@@ -12,12 +13,8 @@ import { TaskServiceToken } from '../../../main';
 })
 export class NewTaskComponent {
   private formEl = viewChild<ElementRef<HTMLFormElement>>('form');
-  // private tasksService: TasksService;
-  // constructor() {
-  //   this.tasksService = new TasksService();
-  // }  // Let's use Angular for it instead:
-  constructor(@Inject(TaskServiceToken) private tasksService: TasksService) {} // injecting a shared service usable accross the app
-  
+
+  constructor(@Inject(TasksServiceToken) private tasksService: TasksService) {}
 
   onAddTask(title: string, description: string) {
     this.tasksService.addTask({ title, description });
