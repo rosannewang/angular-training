@@ -11,11 +11,13 @@ import { TasksService } from '../tasks.service';
 })
 export class NewTaskComponent {
   private formEl = viewChild<ElementRef<HTMLFormElement>>('form');
-  private tasksService: TasksService;
+  // private tasksService: TasksService;
+  // constructor() {
+  //   this.tasksService = new TasksService();
+  // }  // Let's use Angular for it instead:
+  constructor(private tasksService: TasksService) {} // injecting a shared service usable accross the app
+  
 
-  constructor() {
-    this.tasksService = new TasksService();
-  }
   onAddTask(title: string, description: string) {
     this.tasksService.addTask({ title, description });
     this.formEl()?.nativeElement.reset();
