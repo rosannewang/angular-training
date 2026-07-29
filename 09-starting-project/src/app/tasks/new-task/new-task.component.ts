@@ -1,6 +1,7 @@
-import { Component, ElementRef, viewChild } from '@angular/core';
+import { Component, ElementRef, Inject, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TasksService } from '../tasks.service';
+import { TaskServiceToken } from '../../../main';
 
 @Component({
   selector: 'app-new-task',
@@ -15,7 +16,7 @@ export class NewTaskComponent {
   // constructor() {
   //   this.tasksService = new TasksService();
   // }  // Let's use Angular for it instead:
-  constructor(private tasksService: TasksService) {} // injecting a shared service usable accross the app
+  constructor(@Inject(TaskServiceToken) private tasksService: TasksService) {} // injecting a shared service usable accross the app
   
 
   onAddTask(title: string, description: string) {
