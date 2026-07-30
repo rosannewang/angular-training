@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { MessagesListComponent } from './messages-list/messages-list.component';
 import { NewMessageComponent } from './new-message/new-message.component';
+import { MessagesService } from './messages.service';
 
 @Component({
   selector: 'app-messages',
@@ -11,14 +12,10 @@ import { NewMessageComponent } from './new-message/new-message.component';
   imports: [MessagesListComponent, NewMessageComponent],
 })
 export class MessagesComponent {
-  messages = signal<string[]>([]);
 
   get debugOutput() {
     console.log('[Messages] "debugOutput" binding re-evaluated.');
     return 'Messages Component Debug Output';
   }
 
-  onAddMessage(message: string) {
-    this.messages.update((oldMessages) => [...oldMessages, message]);
-  }
 }
