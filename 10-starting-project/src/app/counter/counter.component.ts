@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, NgZone, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  signal,
+} from '@angular/core';
 
 import { InfoMessageComponent } from '../info-message/info-message.component';
 
@@ -10,8 +15,7 @@ import { InfoMessageComponent } from '../info-message/info-message.component';
   imports: [InfoMessageComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CounterComponent implements OnInit{
-  private zone = inject(NgZone); //service to opt out of change detection
+export class CounterComponent implements OnInit {
   count = signal(0);
 
   get debugOutput() {
@@ -19,16 +23,14 @@ export class CounterComponent implements OnInit{
     return 'Counter Component Debug Output';
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     setTimeout(() => {
       this.count.set(0);
-    }, 4000); 
+    }, 4000);
 
-    this.zone.runOutsideAngular(() => {
-      setTimeout(() => { // Opt out of change detection to avoid zone pollution
-        console.log('Timer expired!');
-      }, 4000);
-    });
+    setTimeout(() => {
+      console.log('Timer expired!');
+    }, 5000);
   }
 
   onDecrement() {
