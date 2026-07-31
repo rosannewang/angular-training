@@ -1,5 +1,5 @@
 import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, map } from 'rxjs';
 
 
 @Component({
@@ -14,7 +14,10 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     // automatically produces an observable that emits a number every second
     // you need at least 1 subscriber to start emitting values
-    const subscription = interval(1000).subscribe({ // counts up from 0
+    const subscription = interval(1000).pipe(
+      map((val) => val * 2),
+      // add more operators as needed here
+    ).subscribe({ // counts up from 0
       next: (val) => console.log(val), // triggered for every new value
       // error: () => {} // triggered if there's an error; useful for HTTP requests
     }); 
