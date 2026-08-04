@@ -21,10 +21,15 @@ export class AvailablePlacesComponent implements OnInit {
 
   ngOnInit() {
     const subscription = this.httpClient
-    .get<{ places: Place[] }>('http://localhost:3000/places')
+    .get<{ places: Place[] }>('http://localhost:3000/places', {
+      observe: 'response'
+      // observe: 'events' // triggered multiple times
+    })
     .subscribe({
-      next: (resData) => {
-      console.log(resData.places)
+      next: (response) => {
+      console.log(response);
+      // console.log(event);  
+      console.log(response.body?.places) // the response may be null
       }
     });
 
