@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Place } from '../place.model';
 import { PlacesComponent } from '../places.component';
 import { PlacesContainerComponent } from '../places-container/places-container.component';
+import { catchError, map, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-available-places',
@@ -14,22 +15,34 @@ import { PlacesContainerComponent } from '../places-container/places-container.c
 })
 export class AvailablePlacesComponent implements OnInit {
   places = signal<Place[] | undefined>(undefined);
+  isFetching = signal(false);
+  error = signal('');
   private httpClient = inject(HttpClient); // null error on its own, so we need to provide it in the app config
   private destroyRef = inject(DestroyRef);
   // alternatively use a module or constructor:
   // constructor(private httpCleint: HttpClient) {}
 
   ngOnInit() {
+    this.isFetching.set(true);
     const subscription = this.httpClient
-    .get<{ places: Place[] }>('http://localhost:3000/places', {
-      observe: 'response'
-      // observe: 'events' // triggered multiple times
-    })
+    .get<{ places: Place[] }>('http://localhost:3000/places')
+    .pipe(
+      map((resData) => resData.places),
+      catchError((error) => {
+        console.log(error);
+        return throwError(() => new Error('Something went wrong fetching available places. Please try again later.'));
+      })
+    )
     .subscribe({
-      next: (response) => {
-      console.log(response);
-      // console.log(event);  
-      console.log(response.body?.places) // the response may be null
+      next: (places) => {
+        this.places.set(places);
+      },
+      error: (error) => {
+        console.log(error);
+        this.error.set(error.message);
+      },
+      complete: () => { // guarunteed to only run once
+        this.isFetching.set(false);
       }
     });
 
