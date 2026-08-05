@@ -4,7 +4,15 @@
   <div class="control-row">
     <div class="control no-margin">
       <label for="email">Email</label>
-      <input id="email" type="email" name="email" ngModel required email/> <!--Make sure to add name because it will be registered by ngModel-->
+      <input 
+        id="email" 
+        type="email" 
+        name="email" 
+        ngModel 
+        required 
+        email 
+        #email="ngModel"
+      /> <!--Make sure to add name because it will be registered by ngModel-->
     </div>
 
     <div class="control no-margin">
@@ -16,9 +24,22 @@
         ngModel 
         required 
         minlength="6"
+        #password="ngModel"
          /> <!-- There's also maxlength and pattern -->
     </div>
 
     <button class="button">Login</button>
+    
   </div>
+
+  @if (email.touched && email.dirty && email.invalid) {
+    <p class="control-error">
+      Please enter a valid email.
+    </p>
+  }
+  @if (password.touched && password.dirty && password.invalid) {
+    <p class="control-error">
+      Please enter a valid password (at least 6 characters).
+    </p>
+  }
 </form>
