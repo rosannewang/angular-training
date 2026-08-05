@@ -28,10 +28,21 @@ export class PlacesService {
     }));
   }
 
-  addPlaceToUserPlaces(placeId: string) {
+  addPlaceToUserPlaces(place: Place) {
+    const prevPlaces = this.userPlaces();
+
+    if(!prevPlaces.some(p => p.id === place.id)) { 
+      this.userPlaces.set([...prevPlaces, place]);
+    }
+    
     return this.httpClient.put('http://localhost:3000/user-places', {
-      placeId,
-    });
+      placeId: place.id,
+    }).pipe(
+      catchError(error => {
+        this.userPlaces.set(prevPlaces)
+        return throwError(() => new Error('Failed to add place to user places.'));
+      })
+    );
   }
 
   removeUserPlace(place: Place) {}
