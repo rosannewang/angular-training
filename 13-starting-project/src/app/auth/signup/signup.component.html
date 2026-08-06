@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <h2>Welcome on board!</h2>
   <p>We just need a little bit of data from you to get you started 🚀</p>
 
@@ -98,7 +98,7 @@
     </div>
   </div>
 
-  <fieldset>
+  <fieldset formArrayName="source">
     <legend>How did you find us?</legend>
     <div class="control">
       <input
@@ -106,6 +106,7 @@
         id="google"
         name="acquisition"
         value="google"
+        formControlName="0"
       />
       <label for="google">Google</label>
     </div>
@@ -116,6 +117,7 @@
         id="friend"
         name="acquisition"
         value="friend"
+        formControlName="1"
       />
       <label for="friend">Referred by friend</label>
     </div>
@@ -126,6 +128,7 @@
         id="other"
         name="acquisition"
         value="other"
+        formControlName="2"
       />
       <label for="other">Other</label>
     </div>
@@ -149,4 +152,9 @@
     <button type="reset" class="button button-flat">Reset</button>
     <button type="submit" class="button">Sign up</button>
   </p>
+  @if (form.dirty && form.touched && form.invalid) {
+    <p class="control-error">
+      Invalid form - please check your input data.
+    </p>
+  }
 </form>
