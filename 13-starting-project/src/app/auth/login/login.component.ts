@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { of } from 'rxjs';
+import { of, debounceTime } from 'rxjs';
 
 
 function mustContainQuestionMark(control: AbstractControl){
@@ -17,6 +17,13 @@ function emailIsUnique(control: AbstractControl){ // async validator
   return of({notUnique: true});
 }
 
+let initialEmailValue =''
+const savedForm = window.localStorage.getItem('saved-login-form');
+if (savedForm){
+  const loadedForm = JSON.parse(savedForm);
+  initialEmailValue = loadedForm.email;
+}
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -28,7 +35,7 @@ export class LoginComponent {
 
   // 1. Set up the form
   form = new FormGroup({ // register key value pairs where each value is a FormControl
-    email: new FormControl('', {
+    email: new FormControl(initialEmailValue, {
       validators: [ Validators.required, Validators.email ],
       asyncValidators: [emailIsUnique]
     }),
@@ -47,6 +54,31 @@ export class LoginComponent {
     return this.form.controls.password.touched 
       && this.form.controls.password.dirty 
       && this.form.controls.password.invalid;
+  }
+
+
+  
+  ngOnInit() {
+    // const savedForm = window.localStorage.getItem('saved-login-form');
+    // if(savedForm){
+    //   const loadedForm = JSON.parse(savedForm);
+    //   this.form.patchValue({
+    //     email: loadedForm.email,
+    //   }); // method for partially loading a form
+    // }
+
+    const subscription = this.form.valueChanges.pipe(
+      debounceTime(500)
+    ).subscribe(
+      {
+        next: value => {
+          window.localStorage.setItem(
+            'saved-login-form',
+            JSON.stringify({email: value.email})
+          )
+        }
+      }
+    );
   }
 
   onSubmit() {
