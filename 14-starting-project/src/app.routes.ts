@@ -14,6 +14,11 @@ export const routes: Routes = [
         path: 'users/:userId', // your-domain/users/uid
         component: UserTasksComponent, // add child router in user-tasks html
         children: [
+            {
+                path: '', // redirect to show all tasks
+                redirectTo: 'tasks',
+                pathMatch: 'prefix'
+            },
             { 
                 path: 'tasks', // your-domain/users/uid/tasks
                 component: TasksComponent 
