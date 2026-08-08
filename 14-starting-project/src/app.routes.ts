@@ -1,15 +1,17 @@
 import { Routes } from '@angular/router';
 
 import { routes as userRoutes } from './app/users/users.routes';
-import { UserTasksComponent } from './app/users/user-tasks/user-tasks.component';
+import { resolveTitle, resolveUserName, UserTasksComponent } from './app/users/user-tasks/user-tasks.component';
 import { NoTaskComponent } from './app/tasks/no-task/no-task.component';
 import { NotFoundComponent } from './app/not-found/not-found.component';
-import { resolveUserName } from './app/users/user-tasks/user-tasks.component';
 
 export const routes: Routes = [
     {
         path: '', // your-domain/
         component: NoTaskComponent,
+        // redirectTo: '/users/u1',
+        // pathMatch: 'full'
+        title: 'No task selected'
     },
     { 
         path: 'users/:userId', // your-domain/users/uid
@@ -21,6 +23,7 @@ export const routes: Routes = [
         resolve: { // dynamic data
             userName: resolveUserName // point at the function
         },
+        title: resolveTitle
     },
     {
         path: '**', // fallback route - matches any route that doesn't match the above
