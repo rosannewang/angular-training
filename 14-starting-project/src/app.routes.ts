@@ -3,6 +3,7 @@ import { UserTasksComponent } from './app/users/user-tasks/user-tasks.component'
 import { NoTaskComponent } from './app/tasks/no-task/no-task.component';
 import { TasksComponent } from './app/tasks/tasks.component';
 import { NewTaskComponent } from './app/tasks/new-task/new-task.component';
+import { NotFoundComponent } from './app/not-found/not-found.component';
 
 export const routes: Routes = [
     {
@@ -22,5 +23,9 @@ export const routes: Routes = [
                 component: NewTaskComponent
             }
         ]
+    },
+    {
+        path: '**', // fallback route - matches any route that doesn't match the above
+        component: NotFoundComponent
     }
 ];
