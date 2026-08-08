@@ -1,9 +1,15 @@
-import { provideRouter, withComponentInputBinding } from "@angular/router";
+import { provideRouter, withComponentInputBinding, withRouterConfig } from "@angular/router";
 import { routes } from "./app.routes";
 import { ApplicationConfig } from "@angular/core";
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideRouter(routes, withComponentInputBinding()),
+        provideRouter(
+            routes, 
+            withComponentInputBinding(), 
+            withRouterConfig({ 
+                paramsInheritanceStrategy: 'always' // ensures dynamic path values are injected into child routes
+            })   
+        ),
     ]
 };
