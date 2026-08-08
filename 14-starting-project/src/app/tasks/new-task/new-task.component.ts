@@ -1,6 +1,6 @@
 import { Component, inject, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { CanDeactivateFn, Router } from '@angular/router';
 
 import { TasksService } from '../tasks.service';
 
@@ -32,4 +32,11 @@ export class NewTaskComponent {
       replaceUrl: true, // makes the page work as a redirect and prevents going back to the new task page
     });
   }
+}
+
+export const canLeaveEditPage: CanDeactivateFn<NewTaskComponent> = (component) => {
+  if (component.enteredTitle() || component.enteredDate() || component.enteredSummary()) {
+    return window.confirm('Are you sure you want to leave? You will lose the entered data.');
+  }
+  return true; // always true if the user hasn't entered values
 }
