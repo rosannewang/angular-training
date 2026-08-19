@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AuthService } from './auth.service';
+import { onErrorResumeNext } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -27,7 +28,17 @@ export class AuthComponent {
 
     this.isLoading = true;
     if (this.isLoginMode) {
-      // ...
+      this.authService.login(email, password).subscribe(
+        resData => {
+          console.log(resData);
+          this.isLoading = false;
+        },
+        errorMessage => {
+          console.log(errorMessage);
+          this.error = errorMessage
+          this.isLoading = false;
+        }
+      );
     } else {
       this.authService.signup(email, password).subscribe(
         resData => {
