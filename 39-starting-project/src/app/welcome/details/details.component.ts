@@ -6,6 +6,7 @@ import { AnalyticsService } from 'src/app/shared/analytics.service';
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css'],
+  providers: [AnalyticsService]
 })
 export class DetailsComponent {
   constructor(private analyticsService: AnalyticsService) {}
