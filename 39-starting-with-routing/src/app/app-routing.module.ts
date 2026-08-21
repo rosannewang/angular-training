@@ -11,13 +11,16 @@ const routes: Route[] = [
   },
   {
     path: 'about',
-    component: AboutComponent,
+    // component: AboutComponent,
+    loadComponent() { // load a standalone component lazily 
+      return import('./about/about.component').then((m) => m.AboutComponent);
+    },
   },
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./dashboard/dashboard-routing.module').then(
-        (mod) => mod.DashboardRoutingModule
+    loadChildren: () => // lazy loading
+      import('./dashboard/routes').then(
+        (mod) => mod.DASHBOARD_ROUTES
       ),
   },
 ];
